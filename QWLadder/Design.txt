@@ -1,0 +1,86 @@
+﻿Try to remember login and password - none found - show login page
+Try to login automatically to IRC - no success - show alert, and show login page
+when login is executed, two things are saved:
+* checkbox "login auto"
+* login/pass info
+
+http://www.wpf-tutorial.com/misc-controls/the-windowsformshost-control/
+If you're just getting into .NET https://www.simple-talk.com/dotnet/.net-framework/mixing-wpf-and-winforms/  
+http://msdn.microsoft.com/en-us/library/system.windows.controls.webbrowser%28v=vs.110%29.aspx
+
+
+
+
+Podcast idea: "Checking in on Quakeworld"
+(maybe a more flattering title?)
+
+E-Mailed johnny_cz and pleuraxeraphim to get access to stats.qwnu
+
+
+To make a claim to the ownership of your online handle,
+use an IRC bot
+
+Possible registry entries to use (and verify they exist on disk)
+HKEY_CLASSES_ROOT\qw\Definition\Default
+HKEY_CLASSES_ROOT\qw\shell\Open\Command\Default
+
+HKEY_CURRENT_USER\Software\Classes\qw\DefaultIcon\Default
+HKEY_CURRENT_USER\Software\Classes\qw\shell\Open\Command\Default
+
+HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store <search for Name = *ezquake*> 
+
+
+***
+Enter your username:
+Please note, your username is forced to be either
+a) your real life IRC handle on irc.quakenet.org
+or b) your primary E-Mail address.
+Note: if you don't want to reveal your E-Mail, simply register a username on irc.quakenet.org and use that!  Be sure to hang out in #qwrookie for any questions.
+
+
+
+(how long of an email can quake support???)
+***
+
+Add ability to interface with an online database hosted via json/rest
+
+Database consists of:
+
+ladder name,
+player,
+queue time,
+queue status (open, currently playing, history)
+game result and stats (only if history)
+
+
+Also need a system to.  Every time a ladder queue is issued:
+a) Retrieve most up to date list of servers
+b) Calculate ping times to each server
+
+update the central database as follows:
+delete from pingtimes where player = thisuser
+
+delete from serverlist
+grap rss feed of quakeservers and
+insert into serverlist
+
+select ip, port, servername from serverlist
+foreach server
+insert into 
+
+c) Waiting for players
+
+Then if there are other players (per ladder), show them as the following query:
+select
+  l1.ladder name, l1.player, l2.player
+from ladder l1
+join ladder l2 on l1.ladder name = l2.ladder name
+and l1.player <> l2.player
+
+group by ladder name
+
+best server for each ladder's player A - player B match up is as follows:
+ladder, player1, player2, ping to server
+
+
+As the process is launched, be sure to what?
