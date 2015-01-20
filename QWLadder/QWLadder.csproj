@@ -79,7 +79,9 @@
     <Compile Include="IRCClient.cs" />
     <Compile Include="QuakeClient.cs" />
     <Compile Include="RegKey.cs" />
+    <Compile Include="ServerPinger.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="QWLadderRestApi.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
