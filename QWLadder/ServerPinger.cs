@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.NetworkInformation;
 
 using System.Windows;
 using System.Xml;
@@ -11,29 +13,52 @@ namespace QWLadder
 {
     class ServerPinger
     {
-        public static void GetServerList()
+        private static long CheckPing(string ip, int timeout)
         {
-            try
+            Ping pingSender = new Ping();
+            PingOptions options = new PingOptions();
+
+            // Use the default Ttl value which is 128, 
+            // but change the fragmentation behavior.
+            options.DontFragment = true;
+
+            // Create a buffer of 32 bytes of data to be transmitted. 
+            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            PingReply reply = pingSender.Send(ip, timeout, buffer, options);
+            //Console.Write(ip);
+            if (reply.Status == IPStatus.Success)
             {
-                //MessageBox.Show("Getting server list");
+                //Console.WriteLine("  {0}", reply.RoundtripTime);
+                //Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
+                //Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
+                //Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
+                return reply.RoundtripTime;
+            }
+            else
+            {
+                //Console.WriteLine(" timeout");
+                return -1;
+            }
 
-                XmlDocument serverlist = new XmlDocument();
-                serverlist.XmlResolver = null;
-                serverlist.Load("http://localhost:54182/api/serverlist");
+        }
 
-                foreach (XmlNode server in serverlist.SelectNodes("/rss/channel"))
+        public static Dictionary<string, long> CollectPings(List<string> serverlist, int timeout)
+        {
+            if (serverlist == null)
+                return null;
+
+            Dictionary<string, long> Pings = new Dictionary<string, long>();
+
+            foreach(string serverip in serverlist)
+            {
+                long serverping = CheckPing(serverip, timeout);
+                if (serverping != -1)
                 {
-                    string title = server["title"].InnerText;
-                    string ip = server["ip"].InnerText;
-                    string port = server["port"].InnerText;
-                    Console.WriteLine("Server: #{title} #{ip} #{port}");
+                    Pings.Add(serverip, serverping);
                 }
-
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            return Pings;
         }
     }
 }

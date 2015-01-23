@@ -58,5 +58,17 @@ namespace QWLadder.Properties {
                 this["AutoLogin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PingTimeout {
+            get {
+                return ((int)(this["PingTimeout"]));
+            }
+            set {
+                this["PingTimeout"] = value;
+            }
+        }
     }
 }
