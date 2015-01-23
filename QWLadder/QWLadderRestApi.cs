@@ -88,10 +88,10 @@ namespace QWLadder
         {
             // how long does a post last?
             // 
-            
+
             try
-            string lastLadder = "";
             {
+                string lastLadder = "";
                 var client = new WebClient();
                 client.Encoding = System.Text.Encoding.UTF8;
 
